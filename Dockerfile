@@ -1,8 +1,11 @@
-# Use a minimalistic base image
-FROM scratch
+# Use Alpine Linux as a base image
+FROM alpine:latest
 
-# Add the necessary files
-ADD rootfs.tar.gz /
+# Install OpenSSH, sudo, and Python
+RUN apk add --no-cache openssh sudo python3
 
-# Install OpenSSH and Python
-RUN apk add --no-cache openssh python3
+# Expose the SSH port
+EXPOSE 22
+
+# Command to start the SSH daemon
+CMD ["/usr/sbin/sshd", "-D"]
